@@ -1,0 +1,2832 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Timeline</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/static/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/socket.io.js"></script>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/socket.io.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap.bundle.js"></script>
+</head>
+
+<body class=""
+    style="height:fit-content;scrollbar-width: 20px;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size: 17px;margin: auto;"
+    onload="om()" id='body'>
+    <script>
+        let iscomment = 'false';
+        sio = io.connect((namespace = '/post'))
+    </script>
+    <div class="container-fluid border" style="margin: auto;width: 100vw;left: 0px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border"
+            style="position:fixed;display:inline-flex;width: 100%;z-index:3;top:0px;margin:auto;left: 0px;">
+            <a class="navbar-brand" href="{{url_for('Board')}}">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" style="align-content: space-around;width: 100%;">
+                
+                    <li class="nav-item col-2" style="margin: auto;">
+                        <a class="nav-link" href="{{url_for('Board')}}">Timeline</a>
+                    </li>
+                 
+
+                </ul>
+            </div>
+        </nav>
+
+    </div>
+
+    <script>
+        function showcomment(id) {
+           
+            var myid = 'mycomm' + id
+            
+            var myd = document.getElementById(myid)
+            var min = 'myinn' + id
+            var m = document.getElementById(min)
+           
+            if (myd && m) {
+               
+                if (myd.style.display === 'none') {
+                    
+                    myd.style.display = 'block'
+                   
+                } else if (myd.style.display === '') {
+                    
+                    myd.style.display = 'block'
+                   
+                } else if (myd.style.display === 'block') {
+                   
+                    myd.style.display = 'none'
+                   
+                }
+                else {
+                   
+                    myd.style.display = 'none' 
+            
+                }
+            }
+        }
+
+        function mod(id) {
+        
+            var p = document.getElementById(id)
+
+            if (iscomment !== 'false') {
+              
+                var t = 'edit' + iscomment
+                var e = document.getElementById(t)
+               
+                if (e) {
+                    if (iscomment !== id) {
+                        e.style.display = 'none'
+
+                        var w = 'edit' + id
+                        var y = document.getElementById(w)
+                        if (y) {
+                            y.style.display = 'block'
+                            iscomment = id
+                        }
+                    }
+                    else {
+                        e.style.display = 'none'
+                        iscomment = 'false'
+                    }
+                }
+            }
+            else {
+               
+                if (p) {
+                  
+                    var t = "edit" + id
+                    var e = document.getElementById(t)
+                    
+                    if (e) {
+                     
+                        if (e.style.display === 'block') {
+                           
+                            e.style.display = 'none'
+                            p.style =
+                                'margin:auto;margin-top:5px;height:fit-content;display:flex;width:100%;align-content: space-around;'
+
+                        } else {
+                            if (e.style.display === '') {
+                               
+                                e.style.display = 'block'
+                                p.style =
+                                    'margin:auto;margin-top:5px;height:fit-content;display:flex;width:100%;align-content: space-around;'
+                            } else if (e.style.display === 'none') {
+                               
+                                e.style.display = 'block'
+                                p.style =
+                                    'margin:auto;margin-top:5px;height:fit-content;display:flex;width:100%;align-content: space-around;'
+                                iscomment = id;
+                            } else {
+                              
+                                e.style.display = 'block'
+                                p.style =
+                                    'margin:auto;margin-top:5px;height:fit-content;display:flex;width:100%;align-content: space-around;'
+                                iscomment = id
+                            }
+                        }
+                    }
+                    else {
+                       
+                    }
+                }
+
+                else {
+                   
+                }
+            }
+        };
+
+        function editc(id, post) {
+            
+            var p = document.getElementById(id)
+           
+            var y = "comment" + id;
+            
+            var cb;
+
+            var ep = "cc" + id;
+            var pe = document.getElementById(ep);
+            
+
+            var me = "menu" + id
+            var men = document.getElementById(me)
+            var t = "edit" + id
+            var yt = document.getElementById(t)
+            var yc = document.getElementById(y)
+            if (yc && pe) {
+              
+                var u = yc.innerText
+             
+
+                var myd = document.createElement('div')
+                myd.className = "row border shadow-sm mt-2 mb-1 "
+                myd.id = "div" + id
+
+                var maid = "div" + id
+                myd.style =
+                    "margin:auto;border-radius:15px;height:fit-content;width:100%";
+
+                var np = document.createElement("label");
+                np.className = "col-lg-12 col-sm-12 col-md-12 col-12 shadow-sm";
+                np.style = "word-break:break-all;text-align:center;margin-top:5px";
+                np.innerText = "Edit Comment";
+
+                var inp = document.createElement("textarea")
+                inp.className = "col-11 mb-2 form-control"
+                inp.style =
+                    "margin:auto;word-break:break-all;border-radius:15px;margin-top:3px;width:450px;height:fit-content;"
+                inp.value = u
+                inp.id = "new" + id
+
+                var sp = document.createElement("span")
+                sp.className = "col-2"
+
+                var spp = document.createElement("span")
+                spp.className = "col-2"
+
+                cb = document.createElement("button")
+                cb.className = "col-5 form-control mb-1 g-0 p-0 ml-auto mr-1"
+                cb.innerText = "Cancel"
+                cb.style = "display:block;height:auto;margin:auto;"
+                cb.addEventListener('click', function () {
+                   
+                    cbr(u, maid, id);
+                })
+
+                var sb = document.createElement("button")
+                sb.className = "col-5 form-control mb-1 p-0 g-0 mr-auto ml-1"
+                sb.innerText = "Done"
+                sb.style = "display:block;margin:auto;height:auto"
+                sb.addEventListener('click', function () {
+                  
+                    sendedit(id, post);
+                });
+
+                
+               
+                yt.style.display = 'none'
+                
+                yc.style.display = "none"
+                myd.appendChild(np);
+                myd.appendChild(inp);
+                // myd.appendChild(sp);
+                myd.appendChild(cb);
+                myd.appendChild(sb);
+                //   myd.appendChild(spp);
+                p.style.height = "fit-content";
+                pe.appendChild(myd);
+            }
+
+            men.onclick = function (e) {
+                mod(id);
+                var kj = "edit" + id;
+                var dos = document.getElementById(kj);
+                // 
+                dos.style.display = "none"
+            }
+        };
+        function sendedit(id, post) {
+            var ci = "div" + id
+            var cid = "new" + id
+            var comdiv = document.getElementById(id);
+            var com = document.getElementById(cid);
+
+            var ep = "cc" + id;
+            var pe = document.getElementById(ep);
+            console.log(pe);
+
+            var eyp = "comment" + id;
+            var pey = document.getElementById(eyp);
+
+            console.log(pey);
+
+
+            var editdiv = document.getElementById(ci);
+            console.log(editdiv) //get new input//maind div//and edit div box
+            if (com && pe && pey) {
+                console.log("got all divs");
+                var comv = com.value;
+                console.log(com);
+                console.log(comv);
+
+                data = {
+                    "Comment": comv,
+                    "Type": "Edit",
+                    "Id": id,
+                    "PostId": post
+                };
+                console.log(data);
+                sio.emit("postcomment",
+                    data
+                ) //remove edit div add pp 
+                pey.style.display = "block"
+                pe.removeChild(editdiv);
+
+                var me = "menu" + id
+                var men = document.getElementById(me);
+                men.onclick = function (e) {
+                    mod(id);
+                };
+            } else {
+                console.log("failed to get divs");
+            }
+        }
+
+
+
+    </script>
+
+    <script>
+        function cbr(p, div, maind) {
+            console.log(p);
+            console.log(div);
+            console.log(maind);
+
+            var ep = "cc" + maind;
+            var pe = document.getElementById(ep);
+            console.log(pe);
+
+            var t = "comment" + maind
+            var yt = document.getElementById(t)
+            console.log(yt);
+
+            var ds = document.getElementById(div);
+            var dm = document.getElementById(maind);
+            var pp = document.createElement('p');
+            console.log(ds)
+            console.log(dm)
+            console.log(pp)
+            if (yt && pe && ds && dm) {
+                console.log("got all divs");
+                ds.style.display = "none"
+                yt.style.display = "block"
+                pe.style.height = "fit-content"
+                dm.style.height = "fit-content"
+
+            }
+            else {
+                console.log("did not get divs");
+            }
+        }
+        function cbrr(div, maind) {
+            console.log(div);
+            console.log(maind);
+            var ep = "cc" + maind;
+            var pe = document.getElementById(ep);
+            console.log(pe);
+            var ds = document.getElementById(div);
+            var dm = document.getElementById(maind);
+            console.log(dm);
+            console.log(ds);
+            if (ds && dm && pe) {
+                console.log("got all divs");
+                pe.removeChild(ds)
+            } else {
+                console.log("did not get divs");
+            }
+        }
+
+        function removec(id, post) {
+            console.log(id)
+            var p = document.getElementById(id);
+            console.log(p) //replace comment with input
+            var y = "comment" + id;
+            console.log(y);
+            var t = "edit" + id;
+            var yt = document.getElementById(t);
+            var yc = document.getElementById(y);
+            var me = "menu" + id;
+            var men = document.getElementById(me);
+            var mem = "cc" + id;
+            var memm = document.getElementById(mem);
+            //men.onclick = function(e) { // return false //}
+            console.log("logiing");
+            console.log(memm);
+            console.log(yc);
+            if (yc && memm) {
+                console.log("got yc");
+                console.log(yc);
+                var u = yc.innerText;
+                console.log(u);
+
+                np = document.createElement("label");
+                np.className = "col-lg-12 col-sm-12 col-md-12 col-12 shadow-sm";
+                np.style = "word-break:break-all;text-align:center;margin-top:5px";
+                np.innerText = "Delete Comment";
+
+                nap = document.createElement("label");
+                nap.className = "col-lg-12 col-sm-12 col-md-12 col-12";
+                nap.style = "word-break:break-all;text-align:center;margin-top:5px";
+                nap.innerText = "Delete Are You Sure?";
+
+
+                var myd = document.createElement('div');
+                myd.className = "row border shadow mt-2 mb-1";
+                myd.id = "div" + id;
+                var maid = "div" + id;
+                myd.style =
+                    "margin:auto;border-radius:15px;height:fit-content;";
+
+                sp = document.createElement("span");
+                sp.className = "col-lg-6 col-sm-6 col-md-6 col-6";
+
+                var cb = document.createElement("button");
+                cb.className = "col-5 form-control mb-1 ml-auto mr-1 g-0 p-0";
+                cb.innerText = "Keep";
+                cb.style = "margin:auto;height:auto";
+                cb.addEventListener('click', function () {
+                    console.log("clicking cancel");
+                    cbrr(maid, id);
+                    men.onclick = function (e) {
+                        mod(id);
+                        var kj = "edit" + id;
+
+                        var dos = document.getElementById(kj) //
+                        dos.style.display = "none";
+                    };
+                });
+
+                var sb = document.createElement("button");
+                sb.className = "col-5 form-control  mb-1 mr-auto ml-1  g-0 p-0";
+                sb.innerText = "Delete";
+                sb.style = "margin:auto;height:auto";
+                sb.addEventListener('click', function () {
+                    console.log("clicking delete");
+                    console.log(id);
+                    remhandle(id, post);
+                });
+
+                console.log("got com");
+                console.log(yc);
+                console.log(p.children);
+
+                yt.style.display = 'none';
+
+                myd.appendChild(np);
+                myd.appendChild(nap);
+                // myd.appendChild(sp)
+                myd.appendChild(cb);
+                myd.appendChild(sb);
+
+                p.style.height = "fit-content";
+                memm.appendChild(myd);
+            }
+            else {
+                console.log("did not get divs");
+            }
+        };
+
+        function remhandle(id, post) {
+            console.log('in delete ');
+            var ci = "mycomm" + post
+            var cid = id;
+            var comdiv = document.getElementById(id);
+            var com = document.getElementById(cid);
+            var editdiv = document.getElementById(ci);
+            console.log(editdiv);
+            var mall = document.getElementById("mycomms");
+            console.log('all comments div');
+            console.log(com);
+            if (com) {
+                com.style.display = 'none';
+                data = {
+                    "Type": "Delete",
+                    "Id": id,
+                    'PostId': post
+                }
+                console.log(data);
+                sio.emit("postcomment", data)
+            }
+        }
+
+        function flagc(id, post) {
+            console.log(id);
+            var p = document.getElementById(id);
+            console.log(p) //replace comment with input
+            var y = "comment" + id;
+            console.log(y);
+
+            var ep = "cc" + id;
+            var pe = document.getElementById(ep);
+            console.log(pe);
+
+            var inp = document.createElement("textarea");
+            var yc = document.getElementById(y);
+            var t = "edit" + id;
+            var yt = document.getElementById(t);
+            var me = "menu" + id;
+            var men = document.getElementById(me);
+            if (yc && pe) {
+                console.log("got yc");
+                console.log(yc);
+                var u = yc.innerText;
+                console.log(u);
+
+                var myd = document.createElement('div');
+                myd.className = "row border shadow-sm  mt-1 mb-1";
+                myd.id = "div" + id;
+                var maid = "div" + id;
+                myd.style =
+                    "margin:auto;border-radius:15px;height:fit-content";
+
+                var inp = document.createElement("textarea");
+                inp.className = "col-11 mb-2 form-control";
+                var cid = "flag" + id;
+                inp.id = cid;
+                inp.style =
+                    "margin:auto;word-break:break-all;border-radius:15px;position:relative;height:fit-content;display:flex;";
+
+                np = document.createElement("label");
+                np.className = "col-lg-12 col-sm-12 col-md-12 col-12 shadow-sm ";
+                np.style = "word-break:break-all;text-align:center;";
+                np.innerText = "Reason for reporting this  comment ";
+
+                sp = document.createElement("span");
+                sp.className = "col-3 ";
+
+                var cb = document.createElement("button");
+                cb.className = "col-4 form-control mb-1 g-0 p-0  mr-1 ml-auto";
+                cb.innerText = "Cancel ";
+                cb.style = "margin:auto;height:auto"
+                cb.addEventListener('click', function () {
+                    console.log("clicking cancel");
+                    cbrr(maid, id);
+                    men.onclick = function (e) {
+                        mod(id);
+                        var kj = "edit" + id;
+                        var dos = document.getElementById(kj)
+                        // dos.style.display = "none";
+                    };
+                });
+
+                var sb = document.createElement("button");
+                sb.className = "col-4 form-control mb-1 p-0 g-0 ml-1 mr-auto";
+                sb.innerText = "Done";
+                sb.style = "height:auto;margin:auto"
+                sb.addEventListener('click', function () {
+                    console.log("clicking flag");
+                    console.log(id);
+                    sendflag(id, post);
+                });
+
+                console.log("got com");
+                console.log(yc);
+                console.log(p.children);
+
+                yt.style.display = 'none';
+                myd.appendChild(np);
+                myd.appendChild(inp);
+                // myd.appendChild(sp);
+                myd.appendChild(cb);
+                myd.appendChild(sb);
+
+                p.style.height = "fit-content";
+                pe.appendChild(myd);
+            };
+        };
+
+        function sendflag(id, post) {
+            var ci = "div" + id;
+            var cid = "flag" + id;
+            var comdiv = document.getElementById(id);
+            var com = document.getElementById(cid);
+            var editdiv = document.getElementById(ci);
+            console.log(editdiv);
+            console.log(com);
+            console.log("reason");
+            console.log(com.value);
+            var mall = document.getElementById("mycomms");
+
+            var ep = "cc" + id;
+            var pe = document.getElementById(ep);
+            console.log(pe);
+            if (comdiv && pe) {
+                //var pp = document.createElement('p');
+                // pp.style = "margin:auto;word-break:break-all;border-radius:15px;position:relative;margin-top:10px;height:fit-content;text-align:right;font-size:10px"
+                // pp.className ="col-lg-12 col-sm-12 col-md-12 col-12 "
+                // pp.innerText ="this comment has been flagged"
+                // comdiv.appendChild(pp)
+                var ii = "flagtag" + id;
+                var c = document.getElementById(ii);
+                if (c) {
+                    //c.innerText = "this comment has been flagged" ;
+                    c.style = 'color:red;margin:auto;word-break:break-all;border-radius:15px;margin-top:3px;height:fit-content;display:none;text-align:right;font-size:12px'
+                }
+                pe.removeChild(editdiv);
+                var me = "menu" + id;
+                var men = document.getElementById(me);
+                if (com.value === "") {
+                    data = {
+                        "Reason": '',
+                        "Type": "Flag",
+                        "Id": id,
+                        "PostId": post
+                    }
+                    console.log(data);
+                    console.log('emitting data');
+                    sio.emit("postcomment", data)
+                } else {
+                    data = {
+                        "Reason": com.value,
+                        "Type": "Flag",
+                        "Id": id,
+                        "PostId": post
+                    }
+                    console.log(data);
+                    console.log('emitting data');
+                    sio.emit("postcomment", data)
+                }
+            } //get com div add text this comment has beeen flaged
+        }
+
+        function toverlay(postid, ds) {
+            var oid = ds + postid;
+            var pid = "maindiv" + postid
+            var mainp = document.getElementById(pid);
+            var odiv = document.getElementById(oid);
+            if (mainp && odiv) {
+                console.log("got main and odiv")
+                console.log(mainp)
+                console.log(odiv)
+                mainp.removeChild(odiv)
+            }
+            else {
+                console.log("unable to get postdiv and odiv")
+            }
+        }
+
+        sio.on("postupdate", function (data) {
+            //given post id
+            //get post div
+            //get main post div
+            console.log("got post update");
+            console.log(data);
+            var main = document.getElementById('mydiv')
+            if (data) {
+                var pid = "maindiv" + data['PostId'];
+                var md = document.getElementById(pid);
+                if (md && main) {
+                    console.log(main);
+                    console.log(md);
+                    if (data['Type'] === 'Delete') {
+                        console.log('got delete');
+                        console.log(myposts);
+                        var y = data['PostId']
+                        main.removeChild(md)
+                        delete myposts[y]
+                        console.log('finished reoving');
+                        //get post list
+                        //remove post from list and postdiv
+                    }
+                    if (data['Type'] === 'Flag') {
+                        //get postdiv and posttag
+                        //update posttag
+                        var ftid = 'flagtag' + data['PostId']
+                        var ft = document.getElementById(ftid);
+                        if (ft) {
+                            console.log(ft);
+                            console.log('got post tag and updating')
+                            ft.style.display = "block"
+                        }
+                    }
+                }
+                else {
+                    console.log("div is not found")
+                }
+            }
+            else {
+                console.log("data not found")
+            }
+        })
+    </script>
+
+    <script>
+        var myposts = {};
+
+        sio.on('connect', function (e) {
+            console.log('connected')
+        })
+
+        function om() {
+            console.log("about to join board")
+            sio.emit('joinboard', 'join')
+            console.log("about to join board")
+        }
+
+        sio.on('managecomment', function (data) {
+            console.log('got manage comment')
+            console.log(data)
+            //get comment div
+            var id = data['Id']
+            console.log(id)
+            var comdiv = document.getElementById(id)
+            console.log(comdiv)
+
+            if (data['Type'] === 'Edit') {
+                console.log('got edit')
+                //get comment parag change inner text
+                var cid = 'comment' + data['Id']
+                var civ = document.getElementById(cid)
+                if (civ) {
+                    console.log('got comment parag')
+                    civ.innerText = data['Comment']
+                }
+            }
+            if (data['Type'] === 'Delete') {
+                console.log('got delete')
+                var cp = 'mycomm' + data['PostId']
+                var cdiv = document.getElementById(cp)
+                if (cdiv) {
+                    console.log(cdiv)
+                    console.log('got main comm div')
+                    cdiv.removeChild(comdiv)
+                }
+            }
+            if (data['Type'] === 'Flag') {
+                console.log('got flag')
+                var cid = 'flagtag' + data['Id']
+                var civ = document.getElementById(cid)
+                if (civ) {
+                    console.log('got comment parag')
+                    console.log(civ);
+                    civ.innerText = 'This comment has been flagged'
+                    civ.style.display = "block"
+                }
+            }
+        })
+
+        sio.on('postatt', function (data) {
+            console.log("got att data")
+            console.log(data)
+            let myi;
+
+            var pid = "maindiv" + data['PostId']
+            var id = 'myfile' + data['PostId']
+            var t = document.getElementById(id)
+            var tp = document.getElementById(pid)
+            console.log(pid)
+            console.log(id)
+            console.log(t)
+            console.log(tp)
+
+            //from post id get post and media div
+            //add next and previous btn
+            if (t && tp) {
+                //add to myposts list
+                //check if list is empty if so add ui with file type
+                //else add to list add add indicator count
+                console.log("got both nodes")
+                var pi = data['PostId']
+                console.log(myposts)
+                var t = "myfile" + pi
+                var y = "maindiv" + pi
+                var tn = document.getElementById(t)
+                var yn = document.getElementById(y)
+                console.log("main nodes")
+                console.log(tn)
+                console.log(yn)
+                if (myposts[pi]) {
+                    console.log(myposts[pi])
+                    var po = myposts[pi]
+                    console.log("in my list")
+
+                    //check if atts
+                    if (po['Atts']) {
+                        console.log("already has atts")
+                        //add to post[atts dictionary]
+                        //if length ===1 add next btn
+                        console.log(po['Atts'])
+                        if (po['Atts'].length == 1) {
+                            console.log("this is the second")
+                            console.log("this is the second")
+                            console.log("this is the second")
+                            console.log("this is the second")
+                            if (tn && yn) {
+                                //add next button
+                                var nbtn = document.createElement('img')
+                                nbtn.className = ''
+                                nbtn.style = 'position:absolute;right:1%;top:40%;height:20px;width:35px'
+                                nbtn.innerText = 'next'
+                                nbtn.id = 'next' + pi
+                                nbtn.src="/static/Images/Icons/forward.png"
+
+                                nbtn.addEventListener('click', function (e) {
+                                    console.log("clicking next")
+                                    console.log(data['Id'])
+                                    console.log(pi)
+                                    view(data['Id'], pi)
+                                })
+                                var pbtn = document.createElement('img')
+                                pbtn.className = ''
+                                pbtn.style = 'position:absolute;left:1%;top:40%;display:none;height:20px;width:35px'
+                                pbtn.innerText = 'prev'
+                                pbtn.id = 'prev' + pi
+                                pbtn.src='/static/Images/Icons/back.png'
+
+                                tn.appendChild(nbtn)
+                                tn.appendChild(pbtn)
+                            }
+                        }
+                        myposts[pi]['Atts'].push(data)
+                    }
+                    else {
+                        console.log("no atts")
+                        po['Atts'] = [data]
+                        // po['Atts'].push(data)
+                        myposts[pi]['Atts'] = [data]
+                        //get file type and  add to mediadiv+postid
+                        var u = 'textdiv' + pi
+                        var td = document.getElementById(u)
+
+                        if (tn && yn) {
+                            if (data['Type'] == 'image') {
+                                // console.log(data['File'])
+                                console.log("got image")
+                                myi = document.createElement('img')
+                                myi.className = 'col-lg-7 col-sm-12 col-md-12 col-12'
+                                myi.style =
+                                    'height:100%;margin:auto;width:100%;border-radius:5px;margin-bottom:3px'
+                                myi.src = '/static/Images/PostPictures/' + data['Name']
+                                console.log(data['Name'])
+                                myi.id = "active" + pi
+
+                                tn.style = "display:flex;margin:auto;height:300px;width:100%"
+                                tn.appendChild(myi)
+                            }
+                            if (data['Type'] == 'audio') {
+                                //
+                                console.log(data['File'])
+                                console.log("got audio")
+                                console.log("just cheking")
+                                myi = document.createElement('audio');
+                                console.log("just cheking")
+                                myi.className = 'col-lg-12 col-sm-12 col-md-12 col-12';
+                                console.log("just cheking")
+                                myi.style = "height:90px;width:100%;border-radius:15px;margin-bottom:3px;display:block;";
+                                myi.preload = "auto";
+                                myi.autoplay = "true";
+                                console.log("just cheking")
+                                myi.src = '/static/Images/PostPictures/' + data['Name']
+                                myi.id = "active" + pi
+
+                                tn.style = "display:flex;margin:auto;height:280px;width:100%"
+                                tn.appendChild(myi)
+                                myi.style.display = "block"
+                                console.log(myi)
+                            }
+                            if (data['Type'] == 'video') {
+                                //console.log(data['File'])
+                                console.log("got video")
+                                myi = document.createElement('video')
+                                myi.className = 'col-lg-7 col-sm-12 col-md-12 col-12'
+                                myi.style =
+                                    'height:290px;margin:auto;width:100%;border-radius:5px;margin-bottom:3px'
+                                myi.src = '/static/Images/PostPictures/' + data['Name']
+                                myi.id = "active" + pi
+                                myi.preload = true
+                                myi.controls = true
+
+                                tn.style = "display:flex;margin:auto;height:300px;width:100%"
+                                tn.appendChild(myi)
+                            }
+                            if (myi) {
+                                myi.addEventListener('click', function () {
+                                    console.log("clicking file");
+                                    actived(data['PostId'])
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        function view(id, postid) {
+            //get atts list
+            let myi;
+            console.log("something clicked")
+            var li = myposts[postid]['Atts']
+            console.log(li.length)
+            if (li) {
+                for (var i = 0; i < li.length; i++) {
+                    //get position in list
+                    console.log(li[i]['Id'])
+                    if (li[i]['Id'] === id) {
+                        console.log("got position in list");
+                        console.log(i)
+                        console.log(li[i])
+                        //get myfile div
+                        var d = 'myfile' + postid
+                        var tn = document.getElementById(d)
+                        var ac = "active" + postid
+                        var acn = document.getElementById(ac)
+
+                        var b = "next" + postid
+                        var c = "prev" + postid
+                        var pr = document.getElementById(c)
+                        var nex = document.getElementById(b)
+                        if (tn) {
+                            console.log(tn)
+                            //remove children
+                            var data = li[i]
+                            //check if nxt and prv
+                            if (i == (li.length - 1)) {
+                                //remove next
+                                console.log("got last")
+                                console.log(nex)
+                                console.log(pr)
+                                if (nex && pr) {
+                                    console.log("got next and prev")
+                                    nex.style.display = "none"
+                                    pr.style.display = "block"
+                                }
+                                //set view prev id =i-1 li
+                                var pp = li[i - 1]
+                                console.log("this is the new prev id")
+                                console.log(pp['Id'])
+                                pr.addEventListener('click', function (e) {
+                                    console.log("clicked on got last")
+                                    view(pp['Id'], postid)
+                                })
+                            }
+                            else if (i == 0) {
+                                //remove prev
+                                console.log("got first")
+                                if (nex && pr) {
+                                    console.log("got next and prev")
+                                    nex.style.display = "block"
+                                    pr.style.display = "none"
+                                    var pp = li[i + 1]
+                                    console.log("this is the new prev id")
+                                    console.log(pp['Id'])
+                                    nex.addEventListener('click', function (e) {
+                                        console.log("clicked on got first")
+                                        view(pp['Id'], postid)
+                                    })
+                                }
+                            }
+                            else {
+                                //set next and prev values
+                                console.log("got in else")
+                                if (nex && pr) {
+                                    console.log("got next and prev")
+                                    nex.style.display = "block"
+                                    pr.style.display = "block"
+
+                                    var pp = li[i + 1]
+                                    console.log("this is the new next id")
+                                    console.log(pp['Id'])
+                                    nex.addEventListener('click', function (e) {
+                                        console.log("clicked on got else")
+                                        view(pp['Id'], postid)
+                                    })
+
+                                    var pq = li[i - 1]
+                                    console.log("this is the new prev id")
+                                    console.log(pq['Id'])
+                                    pr.addEventListener('click', function (e) {
+                                        console.log("clicked on got else")
+                                        view(pq['Id'], postid)
+                                    })
+                                }
+                                else {
+                                    console.log("did not get next and prev")
+                                }
+                            }
+                            if (data['Type'] == 'image') {
+                                // console.log(data['File'])
+                                console.log("got image")
+                                myi = document.createElement('img')
+                                myi.className = 'col-lg-8 col-sm-8 col-md-8'
+                                myi.style =
+                                    'height:100%;margin:auto;width:100%;border-radius:15px;margin-bottom:3px'
+                                myi.src = '/static/Images/PostPictures/' + data['Name']
+                                myi.id = "active" + postid
+                                console.log(data['Name'])
+                                console.log(acn)
+                                tn.replaceChild(myi, acn)
+                            }
+                            if (data['Type'] == 'audio') {
+                                //console.log(data['File'])
+                                console.log("got audio")
+                                myi = document.createElement('video');
+                                console.log("just cheking")
+
+                                myi.className = 'col-lg-12 col-sm-12 col-md-12 col-12 ';
+                                myi.style = "height:100%;width:100%;border-radius:15px;margin-bottom:3px;display:block;margin:auto;position:absolute;margin-left:2px";
+
+                                myi.id = "active" + postid
+                                console.log("just cheking")
+
+                                myi.controls = 'true';
+                                myi.poster = "/static/Images/PostPictures/42073.png"
+                                myi.src = '/static/Images/PostPictures/' + data['Name'];
+
+                                tn.replaceChild(myi, acn)
+
+                                myi.style.display = "block"
+                                console.log("last cheking")
+                                console.log(myi)
+                            }
+                            if (data['Type'] == 'video') {
+                                //console.log(data['File'])
+                                console.log("got video")
+                                myi = document.createElement('video')
+                                myi.className = 'col-lg-12 col-sm-12 col-md-12 col-12'
+                                myi.style =
+                                    'height:100%;margin:auto;width:100%;border-radius:15px;margin-bottom:3px'
+                                myi.src = '/static/Images/PostPictures/' + data['Name']
+                                myi.preload = true
+                                myi.id = "active" + postid
+                                myi.controls = true
+                                tn.replaceChild(myi, acn)
+                            }
+
+                            if (myi) {
+                                myi.addEventListener("click", function () {
+                                    console.log("clicking file from view");
+                                    actived(data['PostId'])
+                                })
+                            }
+                        }
+                        return true
+                    }
+                    else {
+                        console.log("not here")
+                    }
+                }
+            }
+        }
+
+        sio.on('newpost', function (e) {
+            console.log('got new post')
+            console.log(e)
+            var pos = e['PostId']
+            console.log(pos)
+            myposts[pos] = e
+
+            //menu nodes
+            var mii = document.createElement('img')
+            //mii.type = 'image'
+            mii.src = '/static/Images/Icons/men.png'
+            mii.style = 'margin-left:auto;float:right;margin-top:0px;height:25px;width:20px;margin-right:0px'
+            mii.className = 'border '
+            mii.id = 'opt' + e['PostId']
+            mii.addEventListener('click', function (s) {
+                console.log('clicking show menu')
+                opt(e['PostId'])
+            })
+
+            var ftag = document.createElement('p');
+            ftag.id = 'flagtag' + e['PostId'];
+            ftag.innerText = "This post has been flag"
+            ftag.style = "margin-left:auto;margin-right:20px;color:red;font-size:11px;display:none"
+            ftag.className = ""
+            if (e['Flagged'] === 'true') {
+                console.log('post has been flagged');
+                ftag.style.display = 'block'
+            }
+
+            var ndd = document.createElement('div')
+            ndd.className = 'row  bg-light'
+            ndd.id = 'menu' + e['PostId']
+            ndd.style = 'height:max-content;display:none;width:auto;position:absolute;margin-top:80px;margin-left:35%;align-content:center;z-index:3'
+            console.log(ndd.id)
+
+            var ady = document.createElement('div')
+            ady.className = 'row g-0 p-0'
+            ady.style = "margin:auto"
+
+            var nad = document.createElement('div')
+            nad.className = 'col-lg-1 col-sm-1 col-md-1 col-1 mr-0 mt-0 g-0 p-0 '
+            nad.style = "margin:0px;margin-top:0px"
+
+            nad.appendChild(ady)
+
+            //ady.appendChild(mii)
+
+            var ndad = document.createElement('div')
+            ndad.className = 'col-lg-11 col-md-11 col-sm-10 col-10 g-0 p-0  mt-0'
+            ndad.style = "margin:auto;height:max-content;float:right"
+            ndad.id = "content" + e['PostId']
+            //ndad.style="margin:auto"
+            //  ndad.id = 'menu' + e['PostId']
+            // ndad.style = 'height:min-content;display:none;width:80px;float:right;margin-left:auto;margin-right:1%;position:absolute;flex:inline'
+            //  console.log(ndad.id)
+
+            var ndady = document.createElement('div')
+            ndady.className = 'row g-0 p-0 border mr-0'
+            ndady.style = "margin:0px"
+
+            var mll = document.createElement('label')
+            mll.className = 'col-lg-11 col-sm-11 col-md-11 col-11 g-0 p-0 mt-1 ml-1 mr-1 border'
+            mll.innerText = 'Remove'
+            mll.style = 'margin:auto;text-align:center'
+            mll.addEventListener('click', function (s) {
+                console.log('clicking remove')
+                opt(e['PostId'])
+                deletepost(e['PostId'])
+            })
+
+            var ml = document.createElement('label')
+            ml.className = 'col-lg-11 col-sm-11 col-md-11 col-11 mt-1 ml-1 mr-1 g-0 p-0 border'
+            ml.style = 'margin:auto;text-align:center'
+            ml.innerText = 'Edit'
+            var sps;
+
+            if (e['File']) {
+                sps = e['File']
+            } else {
+                sps = []
+            }
+            ml.addEventListener('click', function (s) {
+                console.log('clicking edit')
+                data = {
+                    Att: sps,
+                    Id: e['PostId'],
+                    Post: e['Post']
+                }
+                console.log(data)
+                opt(e['PostId'])
+                editp(data)
+            });
+
+            var mml = document.createElement('label')
+            mml.className = 'col-lg-11 col-sm-11 col-md-11 col-11 mt-1 ml-1 mr-1 g-0 p-0 mb-1 border'
+            mml.innerText = 'flag'
+            mml.style = 'margin:auto;text-align:center;height:max-content'
+            mml.addEventListener('click', function (s) {
+                console.log('clicking flag in post')
+                console.log(e['PostId'])
+                opt(e['PostId'])
+                flagpost(e['PostId'])
+            })
+
+            ndd.appendChild(mll)
+            // ndd.appendChild(ml)
+            ndd.appendChild(mml)
+
+            var mydiv = document.getElementById('mydiv')
+            //check if file
+            var maind = document.createElement('div')
+            maind.className = 'row border  '
+            maind.style =
+                'width:100%;margin:auto;border-radius:5px;margin-bottom:5px;display:flex;height:min-content;'
+            maind.id = 'maindiv' + e['PostId']
+
+            var mediadiv = document.createElement('div')
+            mediadiv.className = 'row'
+            mediadiv.style = 'display:none;width:100%;margin:auto';
+            mediadiv.id = 'myfile' + e['PostId']
+
+            var dp = document.createElement('img')
+            dp.className = 'border ml-1 mr-2'
+            dp.style = 'height:50px;border-radius:25px;width:50px;float:left;'
+            dp.src = '/static/Images/Icons/church.jpg';
+            dp.id = 'mydp' + e['PostId']
+
+            var username = document.createElement('label')
+            username.className = ' col-lg-8 col-md-8 col-sm-8 col-8  g-0 p-0'
+            username.style = 'height:20px;overflow:hidden;font-size:13px;margin:auto;'
+            username.innerText = 'Peter Njenga wambua'
+
+            var dat = document.createElement('label')
+            dat.className = ' col-lg-3 col-md-3 col-sm-3 col-2 g-0 p-0'
+            dat.style = 'height:20px;width:100%;overflow:hidden;font-size:10px;margin:auto;text-align:right'
+            dat.innerText = 'Mon Feb 8 15:40:47 2021'
+
+            var post = document.createElement('p')
+            post.className = 'col-lg-12 col-sm-12 col-md-12 col-12 p-1  g-1 ';
+            post.style = 'height:fit-content;margin:auto;border-radius:5px;word-break:break-all;margin-bottom:2px;white-space:pre-wrap;overflow:hidden;width:95%;';
+            post.innerText = e['Post']
+            post.id = 'text' + e['PostId']
+
+            var mbt = document.createElement('button')
+            mbt.className = 'form-control btn btn-primary mt-auto ml-0 mr-0 col-lg-3 col-sm-6 col-md-4 col-6 ml-3 g-1 p-1'
+            mbt.style = 'font-size:small;margin-top:auto;width:fit-content;height:25px;margin-bottom:10px;float:left'
+            mbt.innerText = 'show more'
+            mbt.id = 'textbtn' + e['PostId']
+
+            var tdiv = document.createElement('div')
+            tdiv.className = 'col-lg-12 col-md-12 col-sm-12 col-12 g-0 p-0   bg-light'
+            tdiv.style = 'display:block;width:100%;height:max-content;margin:auto;'
+            tdiv.id = 'textdiv' + e['PostId']
+
+            if (e['Post'] === '') {
+                post.style.display = "none"
+                // tdiv.style.display = "none"
+                post.style.height = "0px"
+            }
+            else {
+
+                console.log("post content")
+                console.log(e['Post'])
+                tdiv.appendChild(post)
+                //tdiv.style ='margin:auto;display:block;width:90%'
+                // post.className = 'col-lg-12 col-sm-12 col-md-12 col-12'
+                console.log("got post height");
+                // console.log(post.style.height);
+                console.log(post.scrollHeight);
+                console.log(post);
+                if (post) {
+
+                    tdiv.appendChild(mbt)
+                    post.style.height = '50px'
+                    mbt.addEventListener('click', function () {
+                        if (mbt.innerText === 'show more') {
+                            post.style.height = "max-content"
+                            mbt.innerText = 'show less'
+                        }
+                        else if (mbt.innerText === 'show less') {
+                            console.log(post.scrollHeight);
+                            if (post.scrollHeight < 50) {
+                                post.style.height = "max-content"
+                            }
+                            else {
+                                post.style.height = "50px"
+                            }
+
+                            mbt.innerText = 'show more'
+                        }
+                        else {
+                            if (post.scrollHeight < 50) {
+                                post.style.height = "max-content"
+                            }
+                            else {
+                                post.style.height = "50px"
+                            }
+
+                            mbt.innerText = 'show more'
+                        }
+                    })
+                }
+                else {
+                    console.log('post lenght less than 50px');
+                }
+
+
+            }
+
+
+
+
+            var indiv = document.createElement('div')
+            indiv.className = 'row  m-auto'
+            indiv.style = 'width:99%;margin:auto;display:flex';
+            indiv.id = 'myinn' + e['PostId']
+
+            var sp = document.createElement('span')
+            sp.className = 'col-lg-6 col-sm-6 col-md-6 col-6'
+
+            var inn = document.createElement('textarea')
+            inn.className = 'col-lg-8 col-sm-8 col-md-8 col-8  mt-0 mr-0 mb-2 form-control p-0 g-0'
+            inn.style = 'height:24px;text-align:left;overflow-y:hidden;position:relative;'
+            inn.placeholder = 'write comment'
+            inn.id = e['PostId']
+            inn.addEventListener("input", function () {
+                var u = e['PostId']
+                oncc(u)
+            })
+
+            var cdp = document.createElement('img')
+            cdp.className = 'mr-1 mt-0'
+            cdp.style = 'height:40p;border-radius:20px;width:40px;float:left;margin-bottom:auto'
+            cdp.src = '/static/Images/Icons/church.jpg'
+
+            var bt = document.createElement('button')
+            bt.className = 'form-control btn btn-secondary mt-auto ml-0 mr-0 col-lg-1 col-sm-2 col-md-2 col-2 g-0 p-0 ml-2'
+            bt.style = 'font-size:small;margin-top:auto;width:fit-content;height:24px;margin-bottom:15px;float:left'
+            bt.innerText = 'post'
+
+            bt.addEventListener('click', function (de) {
+                console.log('clicking post')
+                var st = e['PostId']
+                console.log(st)
+                ef(st)
+
+                console.log(pos)
+            })
+            var comdiv = document.createElement('div')
+            comdiv.className = 'row g-0 p-0 border'
+            comdiv.style = 'margin:auto;display:none;max-height:300px;overflow-x:false;overflow-y:auto;width:90%;height:fit-content'
+            comdiv.id = 'mycomm' + e['PostId']
+
+            var comlink = document.createElement('button')
+            comlink.innerText = "comments"
+            comlink.className = "form-control btn btn-primary"
+            comlink.style = "margin-left:10%;width:max-content;height:30px"
+            comlink.id = "comlink" + e['PostId']
+            comlink.addEventListener('click', function () {
+                console.log('toggle show comments')
+                showcomment(e['PostId'])
+            })
+            var spa = document.createElement('span')
+            spa.className = 'col-lg-6 col-sm-6 col-md-6 col-6'
+
+            //take file and check if already in post
+            indiv.appendChild(cdp)
+            indiv.appendChild(inn)
+            indiv.appendChild(bt)
+
+            maind.appendChild(dp)
+
+            ndady.appendChild(username)
+            ndady.appendChild(dat)
+            ndady.appendChild(mii)
+            ndady.appendChild(ndd)
+            ndady.appendChild(mediadiv)
+            ndady.appendChild(ftag)
+            ndad.appendChild(ndady)
+            maind.appendChild(ndad)
+            // maind.appendChild(nad)
+
+            tdiv.appendChild(indiv)
+            tdiv.appendChild(comlink)
+            tdiv.appendChild(spa)
+            tdiv.appendChild(comdiv)
+            maind.appendChild(tdiv)
+            maind.style.height = "max-content"
+            mydiv.prepend(maind)
+
+
+            // tdiv.style.height = "max-content"
+            // tdiv.style.width = "60%"
+        })
+
+        sio.on("comcount", function (data) {
+            console.log("got comment count");
+
+            if (data) {
+                var id = "comlink" + data['Id']
+                var t = document.getElementById(id)
+
+                if (t) {
+                    //  t.innerText = "comments  " + data['Count']
+
+                    if (data['Count'] === 0) {
+                        //be the first
+                        //remove on first comment or all
+                    }
+                }
+            }
+        });
+
+    </script>
+    <script>
+        function flagpost(postid) {
+            //show reason for flagging
+            //get post absolute over it
+            console.log(postid)
+            var pd = "maindiv" + postid;
+            var pdiv = document.getElementById(pd);
+            console.log(pdiv)
+
+            if (pdiv) {
+                console.log("got pdiv")
+                var md = document.createElement('div');
+                md.className = "row ";
+                md.style = "width:80%;margin:auto;position:absolute;margin-left:90px;margin-top:90px"
+                md.id = "flagdiv" + postid
+
+                var mdd = document.createElement('div');
+                mdd.className = "row border g-1 p-0 bg-light  mt-0";
+                mdd.style = "width:80%;margin:auto;border-radius:10px"
+
+                var inp = document.createElement('textarea');
+                inp.className = 'col-lg-10 col-sm-8 col-md-8 mb-1 form-control';
+                inp.style = "margin:auto";
+
+                var sp = document.createElement('span')
+                sp.className = "col-2"
+
+                var s = document.createElement('span')
+                s.className = "col-2"
+
+                var cbtn = document.createElement('button');
+                cbtn.className = "col-3  form-control";
+                cbtn.style = "margin:auto;text-align:center;margin-left:auto;margin-right:2px";
+                cbtn.innerText = "Cancel";
+                cbtn.addEventListener('click', function () {
+                    console.log('clicking cancel flag')
+                    toverlay(postid, 'flagdiv')
+                });
+
+                var dbtn = document.createElement('button');
+                dbtn.className = "col-3  form-control";
+                dbtn.style = "margin:auto;text-align:center;margin-left:2px;margin-right:auto";
+                dbtn.innerText = "Done";
+                dbtn.addEventListener('click', function () {
+                    console.log('clicking  done flagging')
+                    console.log("my data")
+                    console.log(myposts);
+                    var d = myposts[postid]
+                    d['Type'] = 'Flag'
+                    console.log(d);
+                    sio.emit("manageposts", d)
+
+                    toverlay(postid, 'flagdiv')
+                });
+
+                var pp = document.createElement('label');
+                pp.className = "col-lg-12 col-sm-12 col-md-12 col-12 ";
+                pp.style = "margin:auto;text-align:center";
+                pp.innerText = "Reason for flagging this post";
+
+                var pq = document.createElement('label');
+                pq.className = "col-lg-12 col-sm-12 col-md-12 col-12 border mb-0 g-0";
+                pq.style = "margin:auto;text-align:center;width:100%;border-radius:3px";
+                pq.innerText = "Flag this post"
+
+                mdd.appendChild(pq)
+                mdd.appendChild(pp)
+                //  mdd.appendChild(s)
+                mdd.appendChild(inp)
+                // mdd.appendChild(sp)
+                mdd.appendChild(cbtn)
+                mdd.appendChild(dbtn)
+                md.appendChild(mdd)
+                pdiv.appendChild(md)
+            }
+        }
+
+        function deletepost(postid) {
+            //hide menu
+            //get post absolute over it
+            console.log(postid)
+            var pd = "maindiv" + postid;
+            var pdiv = document.getElementById(pd);
+            console.log(pdiv)
+
+            if (pdiv) {
+                console.log("got pdiv")
+                var md = document.createElement('div');
+                md.className = "row ";
+                md.style = "width:80%;margin:auto;position:absolute;margin-left:90px;margin-top:90px"
+                md.id = "deletediv" + postid
+
+                var mdd = document.createElement('div');
+                mdd.className = "row border g-1 p-1 bg-light  mt-0";
+                mdd.style = "width:50%;margin:auto;border-radius:10px"
+                //  mdd.id = "deletediv" + postid
+
+                var cbtn = document.createElement('button');
+                cbtn.className = "col-3 mb-1 mt-1 form-control";
+                cbtn.style = "margin:auto;text-align:center;margin-left:auto;margin-right:2px";
+                cbtn.innerText = "Cancel"
+                cbtn.addEventListener('click', function () {
+                    console.log('clicking cancel delete ')
+                    toverlay(postid, 'deletediv')
+                });
+
+                var dbtn = document.createElement('button');
+                dbtn.className = "col-3 mb-1 form-control";
+                dbtn.style = "margin:auto;text-align:center;margin-left:2px;margin-right:auto";
+                dbtn.innerText = "Delete";
+                dbtn.addEventListener('click', function () {
+                    console.log('clicking delete')
+                    //emit this post data
+                    console.log("my data")
+                    console.log(myposts);
+
+                    var d = myposts[postid]
+                    d['Type'] = 'Delete'
+                    console.log(d);
+                    sio.emit("manageposts", d)
+                    toverlay(postid, 'deletediv')
+                });
+
+                var pp = document.createElement('label');
+                pp.className = "col-lg-12 col-sm-12 col-md-12 col-12  mt-1";
+                pp.style = "margin:auto;text-align:center";
+                pp.innerText = "Are you sure?";
+
+                mdd.appendChild(pp)
+                mdd.appendChild(cbtn)
+                mdd.appendChild(dbtn)
+                md.appendChild(mdd)
+
+                pdiv.appendChild(md)
+            }
+        }
+        function ef(id) {
+            var d = document.getElementById(id)
+            var t = d.value
+            console.log('got value')
+            console.log(t)
+            console.log(d)
+            if (!t == '') {
+                if (id) {
+                    var da = {
+                        Comment: t,
+                        PostId: id,
+                        Type: 'Create'
+                    }
+                    sio.emit('postcomment', da)
+
+                    console.log('emmited')
+                }
+                d.value = ''
+                d.style.height = "30px"
+            }
+        }
+        sio.on('postcomment', function (e) {
+            console.log('got message')
+            console.log(e)
+            var commid = e['Id']
+            console.log(e['PostId'])
+            var ds = 'mycomm' + e['PostId']
+            console.log(ds)
+
+            var myc = document.getElementById(ds)
+            console.log(myc)
+
+            var tas = document.createElement('div')
+            tas.className = "col-lg-10 col-md-10 col-sm-9 col-9 g-0 p-0 ml-0 border "
+            tas.style = "margin-top:0px;width:100%;margin:auto;float:left"
+            tas.id = "cc" + commid
+
+            var tass = document.createElement('div')
+            tass.className = "row g-0 p-0 ml-0 mr-0 g-0 p-0"
+            tass.style = "margin:auto;width:100%;"
+
+            var opts = document.createElement('div')
+            opts.className = "col-lg-1 col-md-1 col-sm-1 col-1 mt-0 z-index:2 g-0 p-0 border"
+            opts.style = "margin-top:auto;font-size:12px;height:fit-content;width:min-content;float:left"
+
+            var myme = document.createElement('img')
+            myme.className = 'mt-0 mr-0  g-0 p-0  border'
+            myme.src = '/static/Images/Icons/men.png'
+            myme.style = "height:20px;width:auto;float:right"
+            myme.id = 'menu' + commid
+            myme.addEventListener('click', function (e) {
+                console.log('clicking toggle menu')
+                console.log(commid)
+                mod(commid)
+            })
+
+            var mend = document.createElement('div')
+            mend.className = 'row border g-0 p-0 bg-light'
+            mend.id = 'edit' + commid
+            mend.style = 'width:max-content;height:fit-content;margin:auto;position:absolute;margin-left:40%;margin-top:15px;font-size:14px;z-index:3;display:none'
+
+            var rlabel = document.createElement('label')
+            rlabel.className = 'col-lg-12 col-sm-12 col-md-12 col-12 border g-0 p-0 mt-1'
+            rlabel.style = 'margin:0px;text-align:center'
+            rlabel.innerText = 'Remove'
+            rlabel.addEventListener('click', function () {
+                console.log('clicking remove')
+                console.log(commid)
+                removec(commid, e['PostId'])
+            })
+
+            var elabel = document.createElement('label')
+            elabel.className = 'col-lg-12 col-sm-12 col-md-12 col-12 border g-0 p-0 mt-1'
+            elabel.innerText = 'Edit'
+            elabel.style = 'margin:0px;text-align:center'
+            elabel.addEventListener('click', function () {
+                console.log('clicking edit')
+                console.log(commid)
+                editc(commid, e['PostId'])
+            })
+
+            var flabel = document.createElement('label')
+            flabel.className = 'col-lg-12 col-sm-12 col-md-12 col-12 border g-0 p-0 mt-1'
+            flabel.innerText = 'Flag'
+            flabel.style = 'margin:0px;text-align:center;'
+            flabel.addEventListener('click', function () {
+                console.log('clicking flaging')
+                console.log(commid)
+                flagc(commid, e['PostId'])
+            })
+
+            mend.appendChild(rlabel)
+            mend.appendChild(elabel)
+            mend.appendChild(flabel)
+
+            var fp = document.createElement('p')
+            fp.className = 'col-lg-12 col-sm-12 col-md-12 col-12'
+            fp.id = 'flagtag' + commid
+            fp.style =
+                'color:red;margin:auto;word-break:break-all;border-radius:15px;margin-top:3px;height:fit-content;display:block;text-align:right;font-size:12px'
+
+            var myimg = document.createElement('img')
+            myimg.className = ''
+            myimg.src = '/static/Images/Icons/church.jpg'
+            myimg.style =
+                'height:40px;width:40px;border-radius:20px;diplay:block'
+
+            var ts = document.createElement('div')
+            ts.className = e['Comment'] + 'row shadow-sm border mb-1 rounded p-0 g-0 border'
+            ts.style =
+                'margin:auto;margin-top:5px;height:fit-content;display:flex;width:100%;align-content: space-around;'
+            ts.id = commid
+
+            var rg = document.createElement('br')
+
+            var lt = document.createElement('label')
+            lt.className = 'col-lg-8 col-md-8  col-sm-8 col-8 g-0 p-0 border mb-0'
+            lt.innerText = e['Username']
+            lt.style =
+                'height:20px;margin-right:auto;text-align:left;overflow:hidden;diplay:flex;margin-right:0px;font-size:12px'
+
+            var tl = document.createElement('label')
+            tl.className = 'col-lg-4 col-md-4 col-sm-4 col-4 g-0 p-0 border mb-0'
+            tl.innerText = e['Date']
+            tl.style =
+                'text-align:left;height:20px;overflow:hidden;diplay:flex;margin-right:0px;font-size:12px;text-align:right'
+
+            var tx = document.createElement('p')
+            tx.className = 'col-lg-12 col-12 shadow-sm border g-0 p-0'
+            tx.style =
+                'margin:auto;height:auto;border-radius:5px;display:block;margin-top:0px;top:0px'
+            tx.id = 'comment' + e['Id']
+            tx.name = e['Id']
+
+            tx.innerText = e['Comment']
+            console.log(tx)
+            console.log(myc)
+
+            myc.prepend(ts)
+            ts.appendChild(myimg)
+            tass.appendChild(lt)
+            tass.appendChild(tl)
+            tass.appendChild(mend)
+            tass.appendChild(tx)
+            // tass.appendChild(tx)
+            tass.appendChild(fp)
+            tas.appendChild(tass)
+            ts.appendChild(tas)
+            opts.appendChild(myme)
+
+            ts.appendChild(opts)
+
+            ts.style.height = "fit-content"
+
+            var rid = "comlink" + e['PostId']
+            var rd = document.getElementById(rid)
+            if (rd) {
+                console.log(rd);
+                console.log("got comm link");
+                console.log(rd.value);
+                if (rd.value === '') {
+                    console.log('got empty str');
+                    rd.value = 1
+                    rd.innerText = "comments " + 1
+                }
+                else {
+                    console.log(rd.value);
+                    let g = Number(rd.value)
+                    rd.value = g + 1
+                    console.log('new');
+                    console.log(rd.value);
+                    console.log("not null value");
+                    rd.value = g + 1
+                    rd.innerText = "comments " + (g + 1)
+                }
+            }
+            else {
+                console.log("no rd");
+            }
+        })
+        sio.on('manageposts', function (data) {
+            console.log('got data')
+            console.log(data)
+            //find post and attachmnets data\
+            if (data['Post']) {
+                var ti = 'text' + data['Id']
+                console.log(ti)
+                var myti = document.getElementById(ti)
+                console.log(ti)
+                if (myti) {
+                    //change innerText
+                    console.log('edditing post text')
+                    myti.innerText = data['Post']
+                }
+            }
+            if (data['Files']) {
+                //remove file+attid
+                console.log(data['Files'])
+                var u = data['Files']
+                console.log(u)
+
+                var fid = 'filediv' + data['Id']
+                var f = document.getElementById(fid)
+                console.log(fid)
+                console.log(f)
+
+                var myu = 'myfilediv' + u['Id']
+                console.log(myu)
+                var umy = document.getElementById(myu)
+                console.log(umy)
+                if (umy && f) {
+                    console.log('removing file div')
+                    f.removeChild(umy)
+                    console.log('file div removed')
+                }
+            }
+        })
+
+        sio.on('Editcomment', function (data) {
+            console.log(data)
+            //get div with comm or straight to comment it self
+            var id = data['Id']
+            console.log(id)
+            if (id) {
+                var mid = 'comment' + id
+                console.log(mid)
+                var pp = document.getElementById(mid)
+                if (pp) {
+                    pp.innerText = data['Comment']
+                    console.log('commented')
+                }
+            }
+        })
+        sio.on('Removecomment', function (data) {
+            console.log(data)
+            //get div with comm or straight to comment it self
+            var id = data['Id']
+            console.log(id)
+
+            var p = document.getElementById('mycomms')
+            console.log(p)
+            var pp = document.getElementById(id)
+            console.log(pp)
+            if (pp) {
+                p.removeChild(pp)
+                console.log('removed')
+            } else {
+                console.log('already removed')
+            }
+        })
+
+        sio.on('Flagcomment', function (data) {
+            console.log(data)
+            console.log("im about to flag this comm");
+            if (data['Id']) {
+                var d = 'flag' + data['Id']
+                var t = document.getElementById(d)
+                if (t) {
+                    t.innerText = 'This Comment Has Been Flaged'
+                    t.style = 'color:red;margin:auto;word-break:break-all;border-radius:15px;margin-top:3px;height:fit-content;display:block;text-align:right;font-size:12px';
+                }
+            }
+        })
+    </script>
+    <script>
+        var myremoved = [];
+        var isediting = 'false';
+
+        function doneedit(post) {
+            //get removed 
+            console.log(post);
+            console.log(myremoved);
+            var po;
+            var newt = "newt" + post['Id'];
+            var mynewt = document.getElementById(newt);
+            if (mynewt) {
+                po = mynewt.value;
+            };
+            //deal
+            // with text
+            var tdiv = "textdiv" + post['Id'];
+            var mytdiv = document.getElementById(tdiv);
+            var te = "text" + post['Id']
+            var mytext = document.getElementById(te);
+            var newt = "newt" + post['Id']
+            var mynewt = document.getElementById(newt);
+            var c = "cancel" + post['Id'];
+            var myc = document.getElementById(c);
+            var d = "done" + post['Id'];
+            var myd = document.getElementById(d);
+            var ci = "mycomm" + post['Id'];
+            var mycc = document.getElementById(ci);
+            var cc = "myinn" + post['Id'];
+            var ccc = document.getElementById(cc)
+            //return menu and opt 
+            var mid = "menu" + post['Id'];
+            var optid = 'opt' + post['Id'];
+            console.log(mid);
+            console.log(optid);
+            var mm = document.getElementById(mid);
+            var mo = document.getElementById(optid);
+            console.log(mm);
+            console.log(mo);
+            var pos = post['Att'];
+            console.log(po);
+            if (myremoved.length > 0) {
+                //create dictionary and send 
+                console.log(myremoved);
+                //if removeddo not unhide 
+                for (var i = 0; i < myremoved.length;) {
+                    for (var r = 0; r < pos.length; r++) {
+                        var pi = pos[r];
+                        var pid = pi['Id'];
+                        var rid = myremoved['Id'];
+                        if (pid === rid) {
+                            //do not undo hide
+                        } else {
+                            //hide remove btn
+                            var tv = "btn" + pid;
+                            var mytv = d;
+                            ocument.getElementById(tv);
+                            if (mytv) {
+                                mytv.style.display = 'none';
+                            }
+                        }
+                    }
+                }
+                if (mytdiv && myd && myc && mynewt) {
+                    if (mytext) {
+                        console.log("got text area ");
+                        mytext.innerText = mynewt.value;
+                        mytext.style.display = 'block';
+                        mytdiv.removeChild(myc);
+                        mytdiv.removeChild(myd);
+                        mytdiv.removeChild(mynewt);
+                    } else {
+                        //create new 
+                        var mtt = document.createElement('p');
+                        mtt.style = "height:fit-content;margin:auto;text-align:left;border-radius:15 px;word-break:break-ll ";
+                        mtt.className = " col-10  ";
+                        mtt.id = "text " + post['Id'];
+                        mtt.innerText = mynewt.value;
+                        mytdiv.append(mtt);
+                        mytdiv.removeChild(myc);
+                        mytdiv.removeChild(myd);
+                        mytdiv.removeChild(mynewt);
+                    }
+                    if (ccc) {
+                        ccc.style.display = 'flex'
+                    }
+                    if (mycc) {
+                        mycc.style.display = 'block'
+                    }
+                    if (mm && mo) {
+                        mm.style.display = "none";
+                        mo.style.display = "block";
+                    }
+                }
+                //sio emit here 
+                console.log("this are my files ");
+                console.log(myremoved);
+                console.log(post['Id']);
+                console.log(po);
+                var data = {
+                    'Post': po,
+                    " Id ": post['Id'],
+                    " Files ": myremoved,
+                    'Type': 'Edit'
+                };
+                sio.emit("manageposts", data);
+                console.log(data);
+                console.log("emitted");
+            } else {
+                if (mytdiv &&
+                    myd && myc && mynewt) {
+                    if (mytext) {
+                        console.log("got textarea ");
+                        mytext.innerText = mynewt.value;
+                        mytext.style.display = 'block';
+                        mytdiv.removeChild(myc);
+                        mytdiv.removeChild(myd);
+                        mytdiv.removeChild(mynewt)
+                    } else {
+                        //create mytext para and add to
+                        var mtt = document.createElement('p');
+                        mtt.style = "height:fit-content;margin:auto;text-align:left;border-radius:15 px;word-reak:break-ll ";
+                        mtt.className = "col-10  ";
+                        mtt.id = "text " + post['Id'];
+                        mtt.innerText = mynewt.value;
+                        mytdiv.append(mtt);
+                        mytdiv.removeChild(myc);
+                        mytdiv.removeChild(myd);
+                        mytdiv.removeChild(mynewt);
+                    }
+                    var data = {
+                        'Post': po,
+                        "Id": post['Id'],
+                        'Type': 'Edit'
+                    };
+                    sio.emit("manageposts", data);
+                    console.log(data);
+                    console.log("emitted");
+                    if (ccc) {
+                        ccc.style.display = 'flex';
+                    };
+                    if (mycc) {
+                        mycc.style.display = 'block';
+                    };
+                    if (mm && mo) {
+                        mm.style.display = "none";
+                        mo.style.display = "block";
+                    };
+                    if (pos) {
+                        for (var r = 0; r < pos.length; r++) {
+                            //hide remove btn
+                            var pi = pos[r];
+                            var pid = pi['Id'];
+                            var tv = "btn" + pid;
+                            var mytv = document.getElementById(tv);
+                            if (mytv) {
+                                mytv.style.display = 'none';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        function canedit(post) {
+            //get post att id 
+            console.log(post);
+            var all = post['Att'];
+            console.log(all);
+            if (all && all.length >
+                0) {
+                for (var i = 0; i < all.length; r++) {
+                    var ti = all[i];
+                    var tid = ti['Id'];
+                    console.log(tid);
+                    //get all myfiledi,,,hide btn
+                    var ud = "myfilediv" + tid;
+                    var iu = document.getElementById(ud);
+                    var udb = "btn" + tid;
+                    var iub = document.getElementById(udb);
+                    console.log(udb);
+                    console.log(iub);
+                    console.log(ud);
+                    console.log(iu);
+                    if (iu) {
+                        iu.style.display = "block";
+                        iub.style.display = "none";
+                    };
+                }
+            }
+            //get input div
+            var tdiv = "textdiv" + post['Id'];
+            var mytdiv = document.getElementById(tdiv);
+            var te = "text" + post['Id'];
+            var mytext = document.getElementById(te);
+            var newt = "newt" + post['Id'];
+            var mynewt = document.getElementById(newt);
+            var c = "cancel" + post['Id'];
+            var myc = document.getElementById(c);
+            var d = "done" + post['Id'];
+            var myd = document.getElementById(d);
+            if (mytdiv && myd && myc && mynewt) {
+                mytdiv.removeChild(myc);
+                mytdiv.removeChild(myd);
+                mytdiv.removeChild(mynewt);
+                if (mytext) {
+                    console.log("got text area ");
+                    mytext.style.display = 'block';
+                }
+            }
+            //return myinput and Comments 
+            var ci = " mycomm " + post['Id'];
+            var mycc = document.getElementById(ci);
+            var cc = "myinn" + post['Id'];
+            var ccc = document.getElementById(cc);
+            if (ccc) {
+                ccc.style.display = 'flex';
+            };
+            if (mycc) {
+                mycc.style.display = 'block';
+            } //return menu and opt
+            var mid = "menu" + post['Id'];
+            var optid = 'opt' + post['Id'];
+            console.log(mid);
+            console.log(optid);
+            var mm = document.getElementById(mid);
+            var mo = document.getElementById(optid);
+            console.log(mm);
+            console.log(mo);
+            if (mm && mo) {
+                mm.style.display = "none";
+                mo.style.display = "block";
+            } //set removed files holder to empty myremoved=[ ]; isediting='false'
+        }
+
+        function rmfile(post, postid) {
+            console.log(post);
+            console.log(postid);
+            var fid = 'myfilediv' + post['Id'];
+            console.log(fid);
+            var fdiv = document.getElementById(fid);
+            console.log(fdiv);
+            var ty = "btn" + post['Id'];
+            var bd = document.getElementById(ty);
+            myremoved.push(post);
+            if (fdiv) {
+                fdiv.style.display = "none"
+                bd.style.display = 'none'
+            }
+        }
+
+        function editp(post) {
+            //show all btns and change chnage popst p to textarea 
+            console.log(post);
+            console.log(post['Att']);
+            var u = post['Att'];
+            if (isediting === 'true') {
+                console.log("already editing somewhere else ");
+                var mid = " menu " + post['Id']
+                var optid = 'opt' + post['Id'];
+                console.log(mid);
+                console.log(optid);
+                var mm = document.getElementById(mid);
+                var mo = document.getElementById(optid);
+                console.log(mm);
+                console.log(mo);
+                if (mm && mo) {
+                    mm.style.display = "none";
+                };
+            } else {
+                isediting = 'true';
+                console.log(u);
+                if (u) {
+                    for (var i = 0; i < u.length; i++) {
+                        //
+                        console.log(u[i]);
+                        var f = u[i];
+                        console.log(f);
+                        var d = 'btn' + f['Id'];
+                        console.log(d);
+                        var t = d
+                        ocument.getElementById(d);
+                        console.log(t);
+                        if (t) {
+                            t.style.display = 'block'
+                            console.log(t);
+                        }
+                    }
+                }
+                var mc = "mycomm" + post['Id'];
+                console.log(mc);
+                var mycom = document.getElementById(mc);
+                console.log(mycom);
+                if (mycom) {
+                    mycom.style.display = 'none'
+                }
+                var mi = "myinn" + post['Id'];
+                console.log(mi);
+                var myinn = document.getElementById(mi);
+                console.log(myinn);
+                if (myinn) {
+                    myinn.style.display = 'none';
+                }
+                var tdiv = "textdiv" + post['Id'];
+                console.log(tdiv);
+                var pdiv = document.getElementById(tdiv)
+                console.log(pdiv);
+                var tid = "text" + post['Id'];
+                console.log(tid);
+                var ptext = document.getElementById(tid);
+                console.log(ptext);
+                var newp = document.createElement('textarea');
+                newp.style = "height:fit-content;margin:auto;text-align:left;border-radius:15 px;word-break:break-ll ";
+                newp.className = "col-lg-12 col-sm-12 col-md-12 col-12 ";
+                newp.id = "newt" + post['Id'];
+                var n = document.createElement("span");
+                n.className = "col-4 ";
+                var cbtn = document.createElement("button");
+                cbtn.className = "col-2 btn btn-primary";
+                cbtn.style = "margin-right:5px;";
+                cbtn.innerText = "Cancel";
+                cbtn.id = "cancel" + post['Id'];
+                cbtn.addEventListener('click', function (e) {
+                    console.log("clicking cancel ");
+                    canedit(post)
+                });
+                var dbtn = document.createElement("button");
+                dbtn.className = "col-2 btn btn-primary ";
+                dbtn.style = "margin-right:5 px;";
+                dbtn.innerText = "Done";
+                dbtn.id = "done " + post['Id'];
+                dbtn.addEventListener('click', function (e) {
+                    console.log("clicking done ");
+                    doneedit(post);
+                });
+                var sa = " maindiv " + post['Id'];
+                var mdi = document.getElementById(sa);
+                mdi.style.height = " 120 px ";
+                if (ptext) {
+                    newp.value = ptext.innerText;
+                    ptext.style.display = 'none';
+                    pdiv.appendChild(newp);
+                    pdiv.appendChild(n);
+                    pdiv.appendChild(cbtn);
+                    pdiv.appendChild(dbtn);
+                } else {
+                    pdiv.appendChild(newp);
+                    pdiv.appendChild(n);
+                    pdiv.appendChild(cbtn);
+                    pdiv.appendChild(dbtn);
+                }
+                var mid = "menu" + post['Id'];
+                var optid = 'opt' + post['Id'];
+                console.log(mid);
+                console.log(optid);
+                var mm = document.getElementById(mid);
+                var mo = document.getElementById(optid);
+                console.log(mm);
+                console.log(mo);
+                if (mm && mo) {
+                    mm.style.display = "none";
+                    mo.style.display = "none";
+                }
+            };
+            //hide menu 
+        }
+        var myatts = [];
+
+        var ttr;
+
+        function gotattatch() {
+            var a = document.getElementById('attatch');
+            var mya = document.getElementById('myattatch');
+            console.log(a);
+            if (a.files.length > 0) {
+                console.log(a.files);
+                var att = a.files.item(0);
+                var tt = a.files.item(0).type;
+                console.log(tt);
+                var tn = a.files.item(0).name;
+                var yt = tt.search('/');
+                console.log(yt);
+                var ss = tt.slice(yt + 1);
+                var dd = tt.slice(0, yt);
+                if (dd === 'audio') {
+                    var attdic = {
+                        "File": att,
+                        "Name": tn,
+                        "Type": dd,
+                        "Ext": ss
+                    };
+                    console.log("this is the dic");
+                    console.log(attdic);
+                    myatts.push(attdic);
+                    console.log("this is the dic list ");
+                    console.log(" got audio ");
+                    var nimg = document.createElement('video');
+                    nimg.controls = true;
+                    nimg.preload = true;
+                    nimg.poster = '/static/Images/men.png'
+                    nimg.style = "height:140px;";
+
+                } else if (dd === 'image') {
+                    var attdic = {
+                        "File": att,
+                        "Name": tn,
+                        "Type": dd,
+                        "Ext": ss
+                    };
+                    console.log("this is the dic");
+                    console.log(attdic);
+                    myatts.push(attdic);
+                    console.log("this is the dic list");
+                    console.log("got image");
+                    var nimg = document.createElement('img');
+                    nimg.style = "height:140px;width:100%";
+                } else if (dd === 'video') {
+                    var attdic = {
+                        "File": att,
+                        "Name": tn,
+                        "Type": dd,
+                        "Ext": ss
+                    };
+                    console.log("this is the dic ");
+                    console.log(attdic);
+                    myatts.push(attdic);
+                    console.log("this is the dic list ");
+                    console.log("got video ");
+                    var nimg = document.createElement('video');
+                    nimg.controls = true;
+                    nimg.preload = true;
+                    nimg.style = "height:140px ";
+                } else {
+                    console.log("got unwanted format");
+                    console.log("poped unwanted data");
+                    console.log(mholder.files.item(i));
+                }
+                //add to myattatch 
+                var bd = document.createElement('button');
+                bd.className = "" + tn;
+                bd.innerText = "X";
+                bd.style = "width:30px;height:30px;position:absolute;margin-left:145px;borderborder-radius:15px"
+
+
+                var nnn = document.createElement('p');
+                nnn.innerText = tn;
+                nnn.style = "text-align:left;display:block;overflow:hidden;height:25px;break-word:break;font-size:14px";
+                nnn.className = "col-lg-12 col-sm-12 col-md-12 col-12 g-0 p-0 border";
+                console.log(mya);
+
+                var md = document.createElement('div')
+                md.className = "row border g-0 p-0"
+                md.style = "width:180px;height:170px;margin:2px;borderborder-radius:15px"
+                md.id = tn;
+
+                nimg.className = "col-lg-12 col-sm-12 col-md-12 col-12 borber";
+                //
+                console.log(nimg);
+
+                md.appendChild(nimg)
+                // mya.appendChild(nimg)
+                md.appendChild(bd);
+                //
+                md.appendChild(nnn);
+                //get data 
+                mya.appendChild(md)
+                bd.addEventListener('click', function () {
+                    console.log("clicking remove");
+                    var ssy = document.getElementById(tn);
+                    var bf = document.getElementsByClassName(tn);
+                    console.log(bf);
+                    ttr=bf
+
+                    var dt = bf.item(0);
+                    console.log(ssy);
+                    mya.removeChild(ssy);
+                    console.log("removed ssy",ssy);
+                    console.log(bf.item(0));
+                  //  mya.removeChild(bf.item(0));
+                    console.log(myatts);
+                    var td = myatts.length + 1;
+                    console.log(td);
+                    for (var l = 0; l < td; l++) {
+                        var b = myatts[l];
+                        if (b['Name'] === tn) {
+                            console.log("got it ");
+                            console.log(b['Name']);
+                            console.log(myatts);
+                            myatts.pop(b);
+                            console.log("ended ");
+                            console.log(myatts);
+                            console.log("removed ");
+                            console.log(b);
+                            break;
+                        }
+                    }
+                    console.log("removed ");
+                });
+                var fr = new FileReader();
+                fr.readAsDataURL(att);
+                console.log(fr);
+                fr.onload = function (e) {
+                    console.log("gotten src ");
+                    var g = e.target.result;
+                    nimg.src = g;
+                    console.log(" added src ");
+                }
+            }
+            a.value = "";
+        }
+
+        function newE() {
+            var it = {}
+            var m = document.getElementById('newtext');
+            var a = document.getElementById('attatch');
+            var mya = document.getElementById('myattatch');
+            var t = m.value;
+            console.log(a);
+            a.value = "";
+            console.log(myatts);
+            if (myatts.length > 0) {
+                console.log("got attatchments");
+                console.log(myatts.length);
+                var atts = {};
+                it['File'] = myatts;
+
+                it['Post'] = t;
+
+                sio.emit("post", it);
+                myatts = []; //clear select list
+                m.style.height = "35px"
+                var chil = mya.children;
+
+                console.log(chil);
+                while (chil.length > 0) {
+                    var sst = chil.length + 1;
+                    console.log();
+                    for (var i = 0; i < chil.length; i++) {
+                        console.log(i);
+                        console.log(chil.item(i));
+                        mya.removeChild(chil.item(i));
+                        console.log("removed");
+                        console.log(chil.length);
+                    }
+                }
+            } else {
+                console.log("no attatchments ");
+                it['Post'] = t;
+
+                sio.emit("post", it)
+            }
+            m.value = " "
+        }
+    </script>
+
+    <script>
+        function edit(post) {
+            var maind = document.createElement('div')
+            maind.className = 'row '
+            maind.style = 'margin:auto;width:90%'
+
+            console.log(post)
+            //get media and create
+            var att = post['Att']
+            console.log(att)
+            console.log(att.length)
+            if (att.length > 0) {
+                sdiv = document.createElement('div')
+                sdiv.id = 'mypost' + post['Id']
+
+                for (var i = 0; i < att.length; i++) {
+                    var u = att[i]
+                    console.log(u)
+                    if (u['Type'] === 'image') {
+                        console.log('got image')
+
+                        mbtn = document.createElement('button')
+                        console.log(mbtn)
+                        mbtn.className = 'btn btn-primary'
+                        mbtn.style = 'margin-top:5px;margin-bottom:auto'
+                        mbtn.innerText = 'X'
+                        mbtn.id = 'btn' + u['Id']
+                        console.log(u['Id'])
+
+                        var ming = document.createElement('img')
+                        ming.className = 'col-lg-12 col-sm-12 col-md-12 col-12 '
+                        ming.src = '/static/Images/' + u['Name']
+                        ming.id = u['Id']
+                        ming.style =
+                            'height:270px;margin:auto;margin-bottom:10px;border-radius:15px;'
+                        sdiv.appendChild(mbtn)
+                        sdiv.appendChild(ming)
+                        maind.appendChild(sdiv)
+                        var sd = 'btn' + u['Id']
+                        console.log(sd)
+                        var st = document.getElementById(sd)
+                        console.log(st)
+
+                        mbtn.addEventListener('click', function (e) {
+                            console.log('clicking remove')
+
+                            var fn = 'mypost' + post['Id']
+                            var bn = 'btn' + u['Id']
+                            console.log(fn)
+                            console.log(bn)
+                            var iss = u['Id']
+                            console.log(iss)
+                            var ff = document.getElementById(iss)
+                            var bb = document.getElementById(bn)
+                            var md = document.getElementById(fn)
+                            console.log(bb)
+                            console.log(ff)
+                            console.log(md)
+                            if (ff && bb && md) {
+                                console.log('got them all')
+                                md.removeChild(ff)
+                                md.removeChild(bb)
+                                console.log('done removing')
+                            }
+                        })
+                    } else if (u['Type'] === 'video') {
+                        console.log('got video')
+                        console.log(u['Id'])
+                        mbtn = document.createElement('button')
+                        mbtn.className = 'btn btn-primary'
+                        mbtn.style = 'margin-top:5px;margin-bottom:auto'
+                        mbtn.innerText = 'X'
+                        mbtn.id = 'btn' + u['Id']
+                        var ming = document.createElement('video')
+                        ming.className = 'col-lg-12 col-sm-12 col-md-12 col-12 '
+                        ming.controls = 'true'
+                        ming.preload = 'auto'
+                        ming.src = '/static/Images/' + u['Name']
+                        ming.id = u['Id']
+                        ming.style =
+                            'height:270px;margin:auto;margin-bottom:10px;border-radius:15px;'
+                        sdiv.appendChild(mbtn)
+                        sdiv.appendChild(ming)
+                        maind.appendChild(sdiv)
+
+                        mbtn.addEventListener('click', function () {
+                            console.log('clicking remove')
+                            console.log(u['Id'])
+                            rmbtn(u['Id'], post['Id'])
+                        })
+                    } else if (u['Type'] === 'audio') {
+                        console.log('got audio')
+                        console.log(u['Id'])
+
+                        mbtn = document.createElement('button')
+                        mbtn.className = 'btn btn-primary'
+                        mbtn.style = 'margin-top:5px;margin-bottom:auto'
+                        mbtn.innerText = 'X'
+                        mbtn.id = 'btn' + u['Id']
+                        var ming = document.createElement('audio')
+                        ming.className = 'col-lg-12 col-sm-12 col-md-12 col-12 ' + u['Name']
+                        ming.id = u['Id']
+                        ming.controls = 'true'
+                        ming.preload = 'auto'
+                        ming.src = '/static/Images/'
+                        ming.style =
+                            'height:70px;margin:auto;margin-bottom:10px;border-radius:15px;'
+                        sdiv.appendChild(mbtn)
+                        sdiv.appendChild(ming)
+                        maind.appendChild(sdiv)
+
+                        mbtn.addEventListener('click', function () {
+                            console.log('clicking remove')
+                            console.log(u['Id'])
+                            rmbtn(u['Id'], post['Id'])
+                        })
+                    } else {
+                        console.log(u['Type'])
+                    }
+                }
+            }
+
+            //get postdiv and get postid hide and show maind
+            var iif = 'postdiv' + post['Id']
+            var ti = 'post' + post['Id']
+            console.log(iif)
+            console.log(ti)
+            var posid = document.getElementById(ti)
+            var po = document.getElementById(iif)
+            console.log(posid)
+            console.log(po)
+
+            var p = document.createElement('textarea')
+            p.value = post['Post']
+            console.log(post['Post'])
+            p.className = 'col-10 '
+            p.style =
+                'height:fit-content;margin:auto;text-align:left;border-radius:15px;word-break:break-all;'
+
+            dbtn = document.createElement('button')
+            dbtn.className = 'col-1 btn btn-primary'
+            dbtn.style = 'margin-top:5px;margin-bottom:auto'
+            dbtn.innerText = 'Done'
+            cbtn = document.createElement('button')
+            cbtn.className = 'col-1 btn btn-primary'
+            cbtn.style =
+                'margin-top:5px;margin-bottom:auto;margin-left:60%;margin-right:5px'
+            cbtn.innerText = 'Cancel'
+
+            var sp = document.createElement('span')
+            sp.className = 'col-2'
+
+            var spp = document.createElement('span')
+            spp.className = 'col-1'
+
+            po.removeChild(posid)
+            po.appendChild(maind)
+            //  po.appendChild(sp)
+            //  po.appendChild(sp)
+            po.append(p)
+            po.append(cbtn)
+            po.append(dbtn)
+        }
+
+        function rmbtn(id, pid) {
+            //delete btn and files
+            console.log(id)
+            console.log(pid)
+            var fn = 'mypost' + pid
+            var bn = 'btn' + id
+            console.log(fn)
+            console.log(bn)
+            var ff = document.getElementById(id)
+            var bb = document.getElementById(bn)
+            var md = document.getElementById(fn)
+            console.log(bb)
+            console.log(ff)
+            console.log(md)
+            if (ff && bb && md) {
+                console.log('got them all')
+                md.removeChild(ff)
+                md.removeChild(bb)
+                console.log('done removing')
+            }
+        }
+
+        function mainopt(mainf, id) {
+            //given function mainf that take id
+            //run f
+            if (mainf && id) {
+                //run
+            } else {
+
+            }
+        }
+
+        function optopt() {
+            console.log(isediting);
+            if (isediting !== 'false') {
+                console.log('already editing somewhere else')
+                console.log('got comment')
+                var t = 'menu' + isediting
+                var e = document.getElementById(t)
+                console.log(t)
+                console.log(e)
+                if (e) {
+                    e.style.display = 'none'
+                    isediting = 'false'
+                }
+            }
+            else {
+                isediting = 'false'
+            }
+        }
+
+        function opt(id) {
+            console.log(id)
+            var p = document.getElementById(id)
+            console.log(p)
+            console.log(isediting);
+            if (isediting !== 'false') {
+                console.log('already editing somewhere else')
+                //close this
+                console.log('got comment')
+                var t = 'menu' + isediting
+                var e = document.getElementById(t)
+                console.log(t)
+                console.log(e)
+                if (e) {
+                    if (isediting !== id) {
+                        e.style.display = 'none'
+
+                        var w = 'menu' + id
+                        var y = document.getElementById(w)
+                        if (y) {
+                            y.style.display = 'block'
+                            isediting = id
+                        }
+                    }
+                    else {
+                        e.style.display = 'none'
+                        isediting = 'false'
+                    }
+                }
+            }
+            else {
+                if (p) {
+                    console.log('got comment')
+                    var t = 'menu' + id
+                    var e = document.getElementById(t)
+                    console.log(t)
+                    console.log(e)
+                    if (e) {
+                        console.log('got eeeeeeeeeee')
+                        if (e.style.display === 'flex') {
+                            console.log('display flex')
+                            e.style.display = 'none'
+                            p.style.height = "fit-content"
+                            isediting = 'false'
+                        } else if (e.style.display === 'flex') {
+                            console.log('display none')
+                            e.style.display = 'none'
+                            p.style.height = "fit-content"
+                            isediting = 'false'
+                        } else {
+                            console.log('display none')
+                            e.style.display = 'flex'
+                            e.style.zIndex = '3'
+                            p.style.height = "fit-content"
+                            isediting = id
+                            console.log(isediting);
+                            // let b = document.getElementById('body')
+                            //  b.style.zIndex = '2'
+                            if (b) {
+                                console.log('got body');
+                                b.addEventListener('click', function (h) {
+                                    console.log('clicking anywhere on body');
+                                    console.log(isediting);
+                                    optopt()
+                                })
+
+                            } else {
+                                console.log('did not get body');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <div class="container-fluid border g-0 p-0"
+        style="margin-top:20vh;height: max-content;overflow-x: hidden;margin: auto;">
+       
+
+        <div class="row g-0 p-0" style="width: 100vw;margin-top:7vh;position: relative;margin: auto;;">
+            <div class="col-sm-12 col-md-12 col-lg-7 col-12 g-1 p-0 " style="margin:auto;width: 100%;margin-top:8vh">
+
+                <div class="row border " style="border-radius:15px; margin:auto;height: max-content;width:95%;">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 " style="width:100%;border-radius:15px;margin: auto;">
+                        <div class="row " id="myattatch" style="width:100%;display:flex">
+                        </div>
+                    </div>
+
+                    <input class="col-sm-4 col-md-4 col-lg-2 form-control " style="justify-items:
+                        center;" id="attatch" type="file" name="myform" onchange="gotattatch()" />
+                    <div class="row border" style="width: 100%;margin: auto;">
+                        <img class="mr-1"
+                            style="height:40px;border-radius:20px;width:40px;float:left;margin-bottom:auto"
+                            src='/static/Images/Icons/church.jpg'>
+                        <textarea class="col-lg-9 col-md-9 col-sm-9 col-lg-11 col-9 mt-1 shadow-sm p-2 g-0 " wrap="soft"
+                            type="textarea" oninput="oncc('newtext')" placeholder="write post" id="newtext"
+                            style="border-radius:5px;flex:left;margin:5px;height:34px;overflow-y: hidden;line-height: 15px;padding-top: 1px;"></textarea>
+
+
+                        <button name="post" class="col-2 col-lg-1 col-md-2 col-sm-2 form-control btn g-0 p-0
+                        btn-primary mr-4" style="float:right;margin-left:auto;height: auto;" onclick="newE()">
+                            Post
+                        </button>
+                    </div>
+
+
+
+                </div>
+                <div class="row  " style="width:100%;margin:auto" id="mydiv">
+
+                    <div class="row border" id="postdiv" style="width:100%;overflow:hidden;margin:auto"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let activediv;
+        function actived(postid) {
+            console.log("in ctivated");
+            let myd = document.getElementById('body')
+
+            let mypd = document.getElementById('postdiv')
+
+            let m = "maindiv" + postid;
+            let pd = document.getElementById(m)
+
+            let mf = "myfile" + postid
+            let cd = document.getElementById(mf)
+
+            let td = "content" + postid
+            let cid = document.getElementById(td)
+
+            let tdc = "mycomm" + postid
+            let sd = document.getElementById(tdc)
+
+            let tdi = "text" + postid
+            let sdi = document.getElementById(tdi)
+
+            let di = "comlink" + postid
+            let dis = document.getElementById(di);
+
+            let tid = "textdiv" + postid
+            let tx = document.getElementById(tid);
+
+            let dpid = 'mydp' + postid;
+            console.log(dpid);
+            let dp = document.getElementById(dpid)
+            console.log(pd);
+
+            if (pd && cd && cid && sd && sdi && dis && mypd && dp && tx) {
+                console.log("got all nodes");
+                if (activediv) {
+                    let hp = "hidepost" + postid
+                    let hidep = document.getElementById(hp)
+
+                    let hpp = "newtextdiv" + postid
+                    let hidepp = document.getElementById(hpp)
+                    //return to normal view
+                    //main div
+                    if (hidep) {
+                        pd.removeChild(hidep)
+                        // pd.removeChild(hidepp)
+                        console.log("hide btn removed");
+                        pd.className = 'row border shadow-sm slide-left'
+                        pd.style = 'width:100%;margin:auto;border-radius:5px;margin-bottom:5px;display:flex;height:fit-content'
+                        console.log();
+
+                        //content div
+                        cid.className = 'col-lg-11 col-md-11 col-sm-11 col-10 g-0 p-0 ml-0 mr-auto'
+                        cid.style = "margin:auto;display:block;width:100%"
+
+                        //media file div
+                        cd.className = 'row shadow-sm border ml-auto mr-auto'
+                        cd.style = 'display:flex;width:100%;margin:auto;height:300px';
+
+                        //check if att available
+                        //comment input
+                        //   sdi.className = 'row border'
+                        let vc = "textbtn" + postid;
+                        let tvv = document.getElementById(vc);
+                        if (tvv.innerText === 'show less') {
+                            sdi.style.height = "50px"
+                            tvv.innerText ="show more"
+                        }
+                        //comment div
+                        //    sd.className = 'row g-0 p-0 border'
+                        sd.style = 'margin:auto;display:none;max-height:300px;overflow-x:false;overflow-y:auto;width:90%;height:fit-content'
+
+                        //comlink
+                        //     dis.className = "form-control btn btn-primary"
+                        //     dis.style = "margin-left:10%;width:max-content;height:30px"
+                        tx.className = 'col-lg-12 col-md-12 col-sm-12 col-12 g-0 p-0 border  bg-light'
+                        tx.style = 'display:block;width:100%;height:max-content;margin:auto;'
+
+                        dp.style.display = 'block'
+
+                        //main body
+                        myd.style.overflowY = 'auto'
+
+                        activediv = false;
+                        console.log("done manimizing");
+                    }
+                    else {
+                        console.log('did not get hidepost btn');
+                        //remove maind
+                        mypd.removeChild(pd)
+                        myd.style.overflowY = 'auto'
+                        activediv = false;
+                        console.log("done manimizing");
+                    }
+                }
+                else {
+                    let newd = document.createElement('div')
+                    newd.className = "row g-0 p-0 bg-light mt-0 border"
+                    newd.style = "width:100%;z-index:3;position:fixed;z-index:4"
+                    newd.id = "hidepost" + postid
+
+                    let newbtn = document.createElement('img')
+                    newbtn.className = "border g-1 g-1"
+                    newbtn.style = "width:50px;float:left;height:20px;margin-left:20px"
+                    newbtn.innerText = "back"
+                    newbtn.src='/static/Images/Icons/back.png'
+
+                    newbtn.addEventListener('click', function () {
+                        console.log('clicked back btn');
+                        console.log(activediv);
+                        actived(postid)
+                    })
+                    newd.appendChild(newbtn)
+                    pd.prepend(newd)
+                    console.log("did not get activated");
+
+                    //create active text div
+                    // let tdiv = document.createElement('div')
+                    tx.className = 'col-12 col-lg-3 col-sm-12 col-md-12 g-0 p-0 mb-2 mr-0 ml-0 border'
+                    tx.style = 'width:100%;margin:auto;height:94%;float:right;margin-top:30px;overflow-y:auto'
+                    //tdiv.id = 'newtextdiv'+ postid
+                    //main div
+                    pd.className = "row g-0 p-0 bg-light m-0 mt-0 border mr-0 ml-0"
+                    pd.style = "width:100vw;position:fixed;z-index:2;height:100%;margin:auto;display:inline;top:60px;left:0px;right:0px;overflow-y:auto"
+                    console.log();
+                    // pd.appendChild(tdiv)
+
+                    //content div
+                    cid.className = "col-12 col-lg-9 col-sm-12 col-md-12 col-xs-12 border g-0 p-0 mr-0 ml-0"
+                    cid.style = "width: 100%;margin: auto;height:max-content;float:left;margin-top:30px"
+
+                    //media div
+                    cd.style.height = "85vh"
+                    //comment input
+                    //  sdi.className = "col-11 col-lg-3 col-sm-11 col-md-11 border g-1 p-0 bg-white ml-0"
+                    //  sdi.style = "width:100%;margin:auto;float:right;margin-top:30px;margin-left:0px;display:flex;height:fit-content"
+
+                    //comment div
+                    sd.className = "col-12 col-lg-12 col-sm-12 col-md-12 border g-0 p-0 bg-white mt-0"
+                    sd.style = "width:100%;margin:auto;height:min-content;display:block;margin-top:0px;overflow-x:hidden;overflow-y:hidden"
+
+                    //com link
+                    //    dis.className = "col-11 col-lg-3 col-sm-11 col-md-11 border g-0 p-0  bg-white mb-0"
+                    //    dis.style = "width:100%;margin:auto;height:max-content;float:right;margin-bottom:0px;diplay:block"
+                    //main body
+                    tx.style.width = "100%"
+                    //tdiv.appendChild(tx)
+                    //tdiv.appendChild(sdi)
+                    // tdiv.appendChild(dis)
+                    // tdiv.appendChild(sd)
+                    myd.style.overflowY = 'hidden'
+                    dp.style.display = 'none'
+
+                    activediv = true;
+                    console.log("done maximizing");
+                }
+            }
+            else {
+                console.log(dp);
+                console.log("did not get all nodes");
+            }
+        }
+
+        function oncc(mind, maind) {
+            var m = document.getElementById(mind)
+            console.log(m.scrollHeight);
+            //var md = document.getElementById(maind)
+            if (m) {
+                console.log("got divs");
+                console.log(m);
+                //  console.log(md);
+                console.log(y);
+                var inputtext = m.value.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "\n");
+                inputtext = m.value.replace(/(?:(?:\r\n|\r|\n)\s*){3}/gm, "\n");
+                //inputtext = m.value.replace(/(?:(?:\r\n|\r|\n)){2}/gm, "");
+                var h = m.value.search(/(?:(?:\r\n|\r|\n)\s*){2}/gm)
+                if (h) {
+                    console.log("got match");
+                }
+                console.log(inputtext);
+                m.value = inputtext
+                if (m.value === '') {
+                    m.style.height = "35px"
+                }
+                else {
+                    var y = m.scrollHeight;
+                    if (y > 80) {
+                        m.style.height = "80px"
+                        m.style.overflowY = "auto"
+                    }
+                    else {
+                        console.log("current");
+                        console.log(y);
+                        m.style.height = y + "px";
+                        console.log(m.style.height);
+                    }
+                }
+                // md.style.display = "fit-content";
+            }
+            else {
+                console.log("did not get all divs");
+                console.log(m);
+                //  console.log(md);
+            }
+        }
+    </script>
+</body>
+
+</html>
